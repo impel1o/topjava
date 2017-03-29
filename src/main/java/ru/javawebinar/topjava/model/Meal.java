@@ -15,7 +15,7 @@ public class Meal {
 
     private final String description;
 
-    private int calories;
+    private final int calories;
 
     public Meal(int id, LocalDateTime dateTime, String description, int calories) {
         this.id = id;
@@ -43,10 +43,6 @@ public class Meal {
 
     public LocalDate getDate() {
         return dateTime.toLocalDate();
-    }
-
-    public void setCalories(int calories) {
-        this.calories = calories;
     }
 
     public LocalTime getTime() {

@@ -15,6 +15,8 @@ import java.util.List;
  */
 public class MealDaoListImpl implements MealDaoList {
     @Override
+
+    //TODO убрать ввод ID, autoincrement
     public void addMeal(Meal meal) {
         MealsDB.getListMeals().add(MealsDB.getIndex(),meal);
         MealsDB.setIndex(MealsDB.getIndex()+1);
