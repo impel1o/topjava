@@ -20,16 +20,19 @@ meals
 
 <table border="1">
     <tr>
+        <th width="80">Id</th>
         <th width="80">Date</th>
         <th width="80">Description</th>
         <th width="80">Calories</th>
         <th width="80"> exceed</th>
+        <th width="80"> Update</th>
+        <th width="80"> Delete</th>
 
     </tr>
     <c:forEach items="${list}" var="user">
 
     <tr>
-
+        <td>${user.id}</td>
         <c:set var="cleanedDateTime" value="${fn:replace(user.dateTime, 'T', ' ')}"/>
         <td>${cleanedDateTime}</td>
         <td>${user.description}</td>
@@ -41,8 +44,12 @@ meals
         </c:if>
 
         <td>${user.exceed}</td>
+        <td><a href="meals?action=edit&id=<c:out value="${user.id}"/>">Update</a></td>
+        <td><a href="meals?action=delete&id=<c:out value="${user.id}"/>">Delete</a></td>
 
     </tr>
     </c:forEach>
+
+    <p><a href="meals?action=edit&id=7">Add User</a></p>
 </body>
 </html>
