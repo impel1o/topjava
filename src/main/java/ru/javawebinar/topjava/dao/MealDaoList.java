@@ -6,9 +6,9 @@ import ru.javawebinar.topjava.model.MealWithExceed;
 import java.util.List;
 
 /**
- * Created by d.baskakov on 29.03.2017.
+ * Created by d.baskakov on 28.03.2017.
  */
-public interface MealDao {
+public interface MealDaoList {
     void addMeal(Meal meal);
     void updateMeal(Meal meal);
     void deleteMeal(int id);

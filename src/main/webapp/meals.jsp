@@ -50,6 +50,6 @@ meals
     </tr>
     </c:forEach>
 
-    <p><a href="meals?action=edit&id=7">Add User</a></p>
+    <p><a href="meals?action=edit&id=999">Add User</a></p>
 </body>
 </html>

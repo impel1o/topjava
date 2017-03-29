@@ -1,65 +1,62 @@
-
 package ru.javawebinar.topjava.dao;
 
-import ru.javawebinar.topjava.db.MealsDB;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.model.MealWithExceed;
 import ru.javawebinar.topjava.util.MealsUtil;
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.util.Iterator;
+import java.time.Month;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
- * Created by d.baskakov on 28.03.2017.
+ * Created by d.baskakov on 29.03.2017.
  */
 public class MealDaoImpl implements MealDao {
+    private static Map<Integer,Meal> Db= new HashMap<>();
+    static
+    {
+        Db.put(1,new Meal(1, LocalDateTime.of(2015, Month.MAY, 27, 10, 0), "Завтрак", 999));
+        Db.put(2,new Meal(2, LocalDateTime.of(2015, Month.MAY, 28, 13, 0), "Обед", 999));
+        Db.put(3,new Meal(3, LocalDateTime.of(2015, Month.MAY, 29, 20, 0), "Ужин", 999));
+    }
+
+    private static int autoIndex=4;
+
     @Override
     public void addMeal(Meal meal) {
-        MealsDB.getListMeals().add(MealsDB.getIndex(),meal);
-        MealsDB.setIndex(MealsDB.getIndex()+1);
+        Db.put(meal.getId(),meal);
     }
 
     @Override
     public void updateMeal(Meal meal) {
-//        getMealById(meal.getId()).setCalories(meal.getCalories());
-        MealsDB.getListMeals().set(meal.getId()-1,meal);
+        Db.put(meal.getId(),meal);
     }
 
     @Override
     public void deleteMeal(int id) {
-        Iterator<Meal> it = MealsDB.getListMeals().iterator();
-
-        while (it.hasNext()) {
-            if (it.next().getId() == id) {
-                it.remove();
-                break;
-            }
-        }
-
+        Db.remove(id);
     }
 
     @Override
     public List<Meal> getAllMeals() {
-        return MealsDB.getListMeals();
+        List<Meal> mealList=Db.entrySet().stream()
+                .map(x -> x.getValue())
+                .collect(Collectors.toList());
+        return mealList;
     }
 
     @Override
     public Meal getMealById(int mealId) {
-        Iterator<Meal> it = MealsDB.getListMeals().iterator();
-        Meal meal;
-        while (it.hasNext()) {
-            meal=it.next();
-            if (meal.getId() == mealId) {
-                return meal;
-            }
-        }
-        return null;
+        return Db.values().stream().filter(x -> x.getId()==mealId).findAny().orElse(null);
+
     }
 
     @Override
     public List<MealWithExceed> getAllMealsWithExceed() {
-        return MealsUtil.getFilteredWithExceeded(MealsDB.getListMeals(), LocalTime.MIN, LocalTime.MAX, 2000);
+        return MealsUtil.getFilteredWithExceeded(getAllMeals(), LocalTime.MIN, LocalTime.MAX, 2000);
     }
-
 }
