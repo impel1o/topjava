@@ -48,16 +48,32 @@ public class InMemoryUserRepositoryImpl implements UserRepository {
     @Override
     public User get(int id) {
         LOG.info("get " + id);
+        if (!repository.containsKey(id))
+        {
+            return null;
+        }
         return repository.get(id);
     }
 
     @Override
     public List<User> getAll() {
         LOG.info("getAll");
-//        return Collections.emptyList();
-        return repository.values().stream()
-                .sorted(Comparator.comparing(NamedEntity::getName))
-                .collect(Collectors.toList());
+        Comparator<User> userComparator = (User o1, User o2) -> {
+            if (o1.getName().equalsIgnoreCase(o2.getName()))
+            {
+                return o1.getEmail().compareTo(o2.getEmail());
+            } else
+                return o1.getName().compareTo(o2.getName());
+        };
+
+        if (repository.isEmpty())   return Collections.emptyList();
+        else
+        {
+            return repository.values().stream()
+                    .sorted(userComparator)
+                    .collect(Collectors.toList());
+        }
+
     }
 
     @Override
