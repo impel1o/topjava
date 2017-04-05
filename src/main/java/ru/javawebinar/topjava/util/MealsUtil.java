@@ -64,8 +64,11 @@ public class MealsUtil {
         return mealsWithExceeded;
     }
     //TODO сделать через дженерики и объединить с isBetweenTime
-    public static boolean isBetween(LocalTime lt, LocalTime startTime, LocalTime endTime) {
-        return lt.compareTo(startTime) >= 0 && lt.compareTo(endTime) <= 0;
+//    public static boolean isBetween(LocalTime lt, LocalTime startTime, LocalTime endTime) {
+//        return lt.compareTo(startTime) >= 0 && lt.compareTo(endTime) <= 0;
+//    }
+    public static<V extends Comparable<V>> boolean isBetween(V x, V min, V max) {
+        return x.compareTo(min) >= 0 && x.compareTo(max) <= 0;
     }
 
     public static MealWithExceed createWithExceed(Meal meal, boolean exceeded) {

@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 @Repository
 public class InMemoryMealRepositoryImpl implements MealRepository {
     private static final Logger LOG = LoggerFactory.getLogger(InMemoryMealRepositoryImpl.class);
-    private Map<Integer, Meal> repository = new ConcurrentHashMap<>();
+    private Map<Integer, Meal> repositoryMeal = new ConcurrentHashMap<>();
     private AtomicInteger counter = new AtomicInteger(0);
 
     {
@@ -32,32 +32,33 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
         if (meal.isNew()) {
             meal.setId(counter.incrementAndGet());
         }
-        repository.put(meal.getId(), meal);
+        LOG.info("new id "+meal.getId()+" userID "+meal.getUserId());
+        repositoryMeal.put(meal.getId(), meal);
         return meal;
     }
 
     @Override
     public boolean delete(int id,int userId) {
-        LOG.info("DATA "+repository.get(id).getId());
+//        LOG.info("DATA "+repositoryMeal.get(id).getId());
 
-        if (repository.get(id).getUserId()==userId) {
-            repository.remove(id);
-            LOG.info("delete " + id);
+        if (repositoryMeal.get(id).getUserId()==userId) {
+            repositoryMeal.remove(id);
+//            LOG.info("delete " + id);
             return true;
         }
-        LOG.info("NE YDALOS' delete " + id);
+//        LOG.info("NE YDALOS' delete " + id);
         return false;
     }
 
     @Override
     public Meal get(int id,int userId) {
         LOG.info("get " + id);
-//        if (!repository.containsKey(id)) {
+//        if (!repositoryMeal.containsKey(id)) {
 //            return null;
 //        }
-        if (repository.get(id).getUserId()==userId)
+        if (repositoryMeal.get(id).getUserId()==userId)
         {
-            return repository.get(id);
+            return repositoryMeal.get(id);
         }
         return null;
     }
@@ -65,11 +66,11 @@ public class InMemoryMealRepositoryImpl implements MealRepository {
     @Override
     public List<Meal> getAll() {
         LOG.info("getAll");
-        if (repository.isEmpty()) return Collections.emptyList();
+        if (repositoryMeal.isEmpty()) return Collections.emptyList();
         else {
             //TODO добавить сортировку по времени , последние записи наверху
 //            sorted(x-> Comparator.comparing(x.getDateTime())).
-            return repository.values().stream().collect(Collectors.toList());
+            return repositoryMeal.values().stream().collect(Collectors.toList());
         }
     }
 }
