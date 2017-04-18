@@ -1,7 +1,6 @@
 package ru.javawebinar.topjava.model;
 
-import javax.persistence.FetchType;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -10,11 +9,29 @@ import java.time.LocalTime;
  * GKislin
  * 11.01.2015.
  */
+@NamedQueries({
+        @NamedQuery(name = Meal.DELETE, query = "DELETE FROM Meal m WHERE m.id=:id AND m.user.id=:userId"),
+        @NamedQuery(name = Meal.FIND, query = "SELECT m FROM Meal m WHERE m.id=:id AND m.user.id=:userId"),
+        @NamedQuery(name = Meal.FILTER_DATE, query = "SELECT m FROM Meal m WHERE m.user.id=:userId and  m.dateTime BETWEEN :startDate and :endDate ORDER BY m.dateTime DESC "),
+        @NamedQuery(name = Meal.ALL_SORTED, query = "SELECT m FROM Meal m WHERE m.user.id=:userId ORDER BY m.dateTime DESC "),
+})
+
+@Entity
+@Table(name = "meals")
 public class Meal extends BaseEntity {
+
+    public static final String DELETE = "Meal.delete";
+    public static final String ALL_SORTED = "Meal.getAllSorted";
+    public static final String FIND = "Meal.find";
+    public static final String FILTER_DATE = "Meal.filter_date";
+
+    @Column(name="date_time",nullable = false)
     private LocalDateTime dateTime;
 
+    @Column(name="description")
     private String description;
 
+    @Column(name="calories",nullable = false)
     private int calories;
 
     @ManyToOne(fetch = FetchType.LAZY)
