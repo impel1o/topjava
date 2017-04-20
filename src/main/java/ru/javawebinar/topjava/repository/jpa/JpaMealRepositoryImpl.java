@@ -24,9 +24,6 @@ public class JpaMealRepositoryImpl implements MealRepository {
     public Meal save(Meal meal, int userId) {
 
         //это ленивая обертка , а можн было сделать и через NamedQueries
-
-
-
         User ref = em.getReference(User.class, userId);
         meal.setUser(ref);
         if (meal.isNew()) {
@@ -36,6 +33,19 @@ public class JpaMealRepositoryImpl implements MealRepository {
             if (get(meal.getId(),userId)==null) return null;
             return em.merge(meal);
         }
+/*
+        if (em.createNamedQuery(Meal.UPDATE)
+        .setParameter("datetime",meal.getDateTime())
+            .setParameter("calories",meal.getCalories())
+            .setParameter("calories",meal.getDescription())
+            .setParameter("calories",meal.getId())
+            .executeUpdate()==0)
+        {
+            return null;
+        }
+*/
+
+
 
     }
 
