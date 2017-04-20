@@ -1,13 +1,17 @@
 package ru.javawebinar.topjava.service;
 
-import org.junit.Test;
+import org.junit.*;
+import org.junit.rules.ExpectedException;
+import org.junit.rules.TestName;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.slf4j.bridge.SLF4JBridgeHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit4.SpringRunner;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.util.exception.NotFoundException;
 
@@ -23,9 +27,35 @@ import static ru.javawebinar.topjava.UserTestData.USER_ID;
         "classpath:spring/spring-app.xml",
         "classpath:spring/spring-db.xml"
 })
-@RunWith(SpringJUnit4ClassRunner.class)
+@RunWith(SpringRunner.class)
 @Sql(scripts = "classpath:db/populateDB.sql", config = @SqlConfig(encoding = "UTF-8"))
 public class MealServiceTest {
+    private static final Logger LOG = LoggerFactory.getLogger(MealServiceTest.class);
+    private static long startTimeTest;
+    private static long endTimeTest;
+
+    @Rule
+    public final TestName name = new TestName();
+    @Rule
+    public final ExpectedException exception = ExpectedException.none();
+
+    //TODo 3: Добавить в тесты MealServiceTest функциональность @Rule: 3.1: проверку Exception 3.2: вывод в лог времени выполнения каждого теста 3.3: вывод сводки в конце класса: имя теста - время выполнения
+
+
+
+
+    @Before
+    public void before() {
+        LOG.info("Start");
+        startTimeTest=System.currentTimeMillis();
+    }
+
+    @After
+    public void after() {
+        endTimeTest=System.currentTimeMillis();
+        LOG.info("TIME FOR TEST --->"+(endTimeTest - startTimeTest)+" NAME------->"+name.getMethodName());
+        LOG.info("End");
+    }
 
     static {
         SLF4JBridgeHandler.install();
@@ -58,8 +88,9 @@ public class MealServiceTest {
         MATCHER.assertEquals(ADMIN_MEAL1, actual);
     }
 
-    @Test(expected = NotFoundException.class)
+    @Test
     public void testGetNotFound() throws Exception {
+        exception.expect(NotFoundException.class);
         service.get(MEAL1_ID, ADMIN_ID);
     }
 
@@ -70,8 +101,9 @@ public class MealServiceTest {
         MATCHER.assertEquals(updated, service.get(MEAL1_ID, USER_ID));
     }
 
-    @Test(expected = NotFoundException.class)
+    @Test
     public void testUpdateNotFound() throws Exception {
+        exception.expect(NotFoundException.class);
         service.update(MEAL1, ADMIN_ID);
     }
 

@@ -35,4 +35,15 @@ public class MealTestData {
     public static Meal getUpdated() {
         return new Meal(MEAL1_ID, MEAL1.getDateTime(), "Обновленный завтрак", 200);
     }
+
+    static {
+        MEAL1.setUser(UserTestData.USER);
+        MEAL2.setUser(UserTestData.USER);
+        MEAL3.setUser(UserTestData.USER);
+        MEAL4.setUser(UserTestData.USER);
+        MEAL5.setUser(UserTestData.USER);
+        MEAL6.setUser(UserTestData.USER);
+        ADMIN_MEAL1.setUser(UserTestData.ADMIN);
+        ADMIN_MEAL2.setUser(UserTestData.ADMIN);
+    }
 }
