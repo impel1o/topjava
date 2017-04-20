@@ -39,10 +39,30 @@ public class MealServiceTest {
     @Rule
     public final ExpectedException exception = ExpectedException.none();
 
-    //TODo 3: Добавить в тесты MealServiceTest функциональность @Rule: 3.1: проверку Exception 3.2: вывод в лог времени выполнения каждого теста 3.3: вывод сводки в конце класса: имя теста - время выполнения
+    //add stopwatch RULE
+    /*  @Rule
+     public Stopwatch stopwatch = new Stopwatch() {
+         @Override
+         protected void succeeded(long nanos, Description description) {
+             logInfo(description, "succeeded", nanos);
+         }
 
+         @Override
+         protected void failed(long nanos, Throwable e, Description description) {
+             logInfo(description, "failed", nanos);
+         }
 
+         @Override
+         protected void skipped(long nanos, AssumptionViolatedException e, Description description) {
+             logInfo(description, "skipped", nanos);
+         }
 
+         @Override
+         protected void finished(long nanos, Description description) {
+             logInfo(description, "finished", nanos);
+         }
+     };
+    * */
 
     @Before
     public void before() {

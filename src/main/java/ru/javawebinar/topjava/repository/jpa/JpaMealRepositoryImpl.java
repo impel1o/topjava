@@ -24,15 +24,16 @@ public class JpaMealRepositoryImpl implements MealRepository {
     public Meal save(Meal meal, int userId) {
 
         //это ленивая обертка , а можн было сделать и через NamedQueries
-        //TODO не проходит тест NotFound, надо сделать NamedQuery
 
-//        if (meal.getUser().getId()!=userId) return null;
+
+
         User ref = em.getReference(User.class, userId);
         meal.setUser(ref);
         if (meal.isNew()) {
             em.persist(meal);
             return meal;
         } else {
+            if (get(meal.getId(),userId)==null) return null;
             return em.merge(meal);
         }
 
