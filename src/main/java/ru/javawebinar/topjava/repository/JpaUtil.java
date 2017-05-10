@@ -19,4 +19,8 @@ public class JpaUtil {
 //        sf.getCache().evictEntityRegion(User.class);
         sf.getCache().evictAllRegions();
     }
+
+    public void setEm(EntityManager em) {
+        this.em = em;
+    }
 }

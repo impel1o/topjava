@@ -1,14 +1,11 @@
 package ru.javawebinar.topjava.web;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import ru.javawebinar.topjava.AuthorizedUser;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.service.MealService;
 import ru.javawebinar.topjava.util.DateTimeUtil;
-import ru.javawebinar.topjava.util.MealsUtil;
 import ru.javawebinar.topjava.web.meal.MealRestController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,22 +20,23 @@ import java.util.Objects;
  */
 @Controller
 @RequestMapping(value = "/meals")
-public class MealController {
+public class MealController extends MealRestController {
 
-    @Autowired
-    MealRestController mealRestController;
+    public MealController(MealService service) {
+        super(service);
+    }
 
-   @GetMapping
+    @GetMapping
     public String meals(Model model)
     {
-        model.addAttribute("meals", mealRestController.getAll());
+        model.addAttribute("meals", super.getAll());
         return "meals";
     }
 
     @GetMapping(value = "/delete")
     public String delMeals(@RequestParam("id")int id)
     {
-        mealRestController.delete(id);
+        super.delete(id);
         return "redirect:/meals";
     }
 
@@ -56,14 +54,12 @@ public class MealController {
     @GetMapping(value = "/update")
     public String updateMeal(Model model,HttpServletRequest request)
     {
-        Meal meal=mealRestController.get(getId(request));
+        Meal meal=super.get(getId(request));
         model.addAttribute("meal",meal);
 //        request.setAttribute("meal", meal);
         return "meal";
     }
 
-    //todo save - нажали кнопку в meal
-    // те значения что есть в полях сохранить в бд и вернуться в Meals
     //        Meal meal=mealRestController.get(getId(request));
 //        request.setAttribute("meal", meal);
     //        model.addAttribute("meal",mealRestController.create(meal));
@@ -87,14 +83,14 @@ public class MealController {
                     LocalDateTime.parse(request.getParameter("dateTime")),
                     request.getParameter("description"),
                     Integer.valueOf(request.getParameter("calories")));
-            mealRestController.create(meal);
+            super.create(meal);
         }
         else {
             final Meal meal = new Meal(
                     LocalDateTime.parse(request.getParameter("dateTime")),
                     request.getParameter("description"),
                     Integer.valueOf(request.getParameter("calories")));
-            mealRestController.update(meal,getId(request));
+            super.update(meal,getId(request));
         }
 
 
@@ -108,7 +104,7 @@ public class MealController {
         LocalDate endDate = DateTimeUtil.parseLocalDate(request.getParameter("endDate"));
         LocalTime startTime = DateTimeUtil.parseLocalTime(request.getParameter("startTime"));
         LocalTime endTime = DateTimeUtil.parseLocalTime(request.getParameter("endTime"));
-        request.setAttribute("meals", mealRestController.getBetween(startDate, startTime, endDate, endTime));
+        request.setAttribute("meals", super.getBetween(startDate, startTime, endDate, endTime));
         return "meals";
     }
 
