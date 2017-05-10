@@ -38,12 +38,14 @@ public class MealRestController {
     public void delete(int id) {
         int userId = AuthorizedUser.id();
         LOG.info("delete meal {} for User {}", id, userId);
+        LOG.trace("trans ?",id,userId);
         service.delete(id, userId);
     }
 
     public List<MealWithExceed> getAll() {
         int userId = AuthorizedUser.id();
         LOG.info("getAll for User {}", userId);
+
         return MealsUtil.getWithExceeded(service.getAll(userId), AuthorizedUser.getCaloriesPerDay());
     }
 

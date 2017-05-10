@@ -40,44 +40,4 @@ public class RootController {
         return "redirect:meals";
     }
 
-    //@RequestMapping(value ="/meals",method = RequestMethod.GET)
-
-
-
-
-
-    //todo update / delete / create
-
-//    @RequestMapping("/remove/{id}")
-//    public String removeUser(@PathVariable("id")int id)
-//    {
-//        this.userService.removeUser(id);
-//        return  "redirect:/users/1";
-//    }
-
-//    @Override
-//    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//        String action = request.getParameter("action");
-//
-//        switch (action == null ? "all" : action) {
-//            case "delete":
-//                int id = getId(request);
-//                mealController.delete(id);
-//                response.sendRedirect("meals");
-//                break;
-//            case "create":
-//            case "update":
-//                final Meal meal = "create".equals(action) ?
-//                        new Meal(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES), "", 1000) :
-//                        mealController.get(getId(request));
-//                request.setAttribute("meal", meal);
-//                request.getRequestDispatcher("/meal.jsp").forward(request, response);
-//                break;
-//            case "all":
-//            default:
-//                request.setAttribute("meals", mealController.getAll());
-//                request.getRequestDispatcher("/meals.jsp").forward(request, response);
-//                break;
-//        }
-
 }
