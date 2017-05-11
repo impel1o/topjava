@@ -98,13 +98,14 @@ public class MealController extends MealRestController {
     }
 
     @PostMapping(value = "/filter")
-    public String filterMeal(HttpServletRequest request)
+    public String filterMeal(HttpServletRequest request,Model model)
     {
         LocalDate startDate = DateTimeUtil.parseLocalDate(request.getParameter("startDate"));
         LocalDate endDate = DateTimeUtil.parseLocalDate(request.getParameter("endDate"));
         LocalTime startTime = DateTimeUtil.parseLocalTime(request.getParameter("startTime"));
         LocalTime endTime = DateTimeUtil.parseLocalTime(request.getParameter("endTime"));
         request.setAttribute("meals", super.getBetween(startDate, startTime, endDate, endTime));
+//        model.addAttribute("meals",super.getBetween(startDate, startTime, endDate, endTime));
         return "meals";
     }
 
