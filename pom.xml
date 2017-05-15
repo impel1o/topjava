@@ -36,6 +36,8 @@
 
         <!--Tools-->
         <ehcache.version>2.10.3</ehcache.version>
+
+        <jackson-json.version>2.8.8.1</jackson-json.version>
     </properties>
 
     <build>
@@ -133,6 +135,13 @@
             <artifactId>slf4j-api</artifactId>
             <version>${slf4j.version}</version>
             <scope>compile</scope>
+        </dependency>
+
+        <!--JSON-->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson-json.version}</version>
         </dependency>
 
         <dependency>
