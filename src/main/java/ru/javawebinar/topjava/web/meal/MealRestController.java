@@ -1,19 +1,18 @@
 package ru.javawebinar.topjava.web.meal;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
+
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import ru.javawebinar.topjava.AuthorizedUser;
 import ru.javawebinar.topjava.model.Meal;
 import ru.javawebinar.topjava.service.MealService;
 import ru.javawebinar.topjava.to.MealWithExceed;
-
 import java.net.URI;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -47,13 +46,35 @@ public class MealRestController extends AbstractMealController {
         super.delete(id);
     }
 
-    @GetMapping(value = "/filter/{startDate}/{startTime}/{endDate}/{endTime}",produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<MealWithExceed> filter(
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @PathVariable("startDate") LocalDate startDate,
-    @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) @PathVariable("startTime") LocalTime startTime,
-    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @PathVariable("endDate") LocalDate endDate,
-    @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)@PathVariable("endTime") LocalTime endTime)
+    //1 вариант
+//    @GetMapping(value = "/filter/{startDate}/{startTime}/{endDate}/{endTime}",produces = MediaType.APPLICATION_JSON_VALUE)
+//    public List<MealWithExceed> filter(
+//    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @PathVariable("startDate") LocalDate startDate,
+//    @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) @PathVariable("startTime") LocalTime startTime,
+//    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @PathVariable("endDate") LocalDate endDate,
+//    @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)@PathVariable("endTime") LocalTime endTime)
+//    {
+//        return super.getBetween(startDate,startTime,endDate,endTime);
+//    }
+
+    // 2 вариант
+//    @GetMapping(value = "/filter",produces = MediaType.APPLICATION_JSON_VALUE)
+//    public List<MealWithExceed> filter(
+//            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam("startDate") LocalDate startDate,
+//            @DateTimeFormat(iso = DateTimeFormat.ISO.TIME) @RequestParam("startTime") LocalTime startTime,
+//            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) @RequestParam("endDate") LocalDate endDate,
+//            @DateTimeFormat(iso = DateTimeFormat.ISO.TIME)@RequestParam("endTime") LocalTime endTime)
+//    {
+//        return super.getBetween(startDate,startTime,endDate,endTime);
+//    }
+
+    @PostMapping(value = "/filter",consumes = MediaType.APPLICATION_JSON_VALUE,produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<MealWithExceed> filter(@RequestBody HashMap<String,String> filters)
     {
+        LocalDate startDate=LocalDate.parse(filters.get("startDate"));
+        LocalDate endDate=LocalDate.parse(filters.get("endDate"));
+        LocalTime startTime=LocalTime.parse(filters.get("startTime"));
+        LocalTime endTime=LocalTime.parse(filters.get("startTime"));;
         return super.getBetween(startDate,startTime,endDate,endTime);
     }
 
@@ -75,30 +96,5 @@ public class MealRestController extends AbstractMealController {
 
 }
 
-
-//    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
-//    public void update(@RequestBody User user, @PathVariable("id") int id) {
-//        super.update(user, id);
-//    }
-
-
-
-//    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-//    public ResponseEntity<User> createWithLocation(@RequestBody User user) {
-//        User created = super.create(user);
-//
-////        HttpHeaders httpHeaders = new HttpHeaders();
-////        httpHeaders.setLocation(uriOfNewResource);
-//
-//        URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
-//                .path(REST_URL + "/{id}")
-//                .buildAndExpand(created.getId()).toUri();
-//
-//        return ResponseEntity.created(uriOfNewResource).body(created);
-//    }
-
-
-
-//    static final String REST_URL = "/rest/meals";
 
 //TODO сделать getAll/get/delete/update
