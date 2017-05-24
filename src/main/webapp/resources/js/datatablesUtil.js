@@ -29,6 +29,17 @@ function deleteRow(id) {
     });
 }
 
+function filter() {
+    $.ajax({
+        url: ajaxUrl + 'filter',
+        type: 'GET',
+        success: function () {
+            updateTable();
+            successNoty('Filtered');
+        }
+    });
+}
+
 function updateTable() {
     $.get({url:ajaxUrl,cache:false},
         function (data) {

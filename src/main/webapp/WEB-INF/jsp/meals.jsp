@@ -5,13 +5,13 @@
 <html>
 <jsp:include page="fragments/headTag.jsp"/>
 <body>
-<%--<script type="text/javascript" src="resources/js/datatablesUtil.js" defer></script>--%>
+<script type="text/javascript" src="resources/js/datatablesUtil.js" defer></script>
 <script type="text/javascript" src="resources/js/mealDatatables.js" defer></script>
 <jsp:include page="fragments/bodyHeader.jsp"/>
 <section>
     <h3><spring:message code="meals.title"/></h3>
 
-    <form method="post" action="meals/filter">
+    <form method="get" action="meals/filter">
         <dl>
             <dt><spring:message code="meals.startDate"/>:</dt>
             <dd><input type="date" name="startDate" value="${param.startDate}"></dd>
@@ -29,6 +29,9 @@
             <dd><input type="time" name="endTime" value="${param.endTime}"></dd>
         </dl>
         <button type="submit"><spring:message code="meals.filter"/></button>
+        <a class="btn btn-info" onclick="filter()">
+            <span class="glyphicon glyphicon-filter" aria-hidden="true"></span>
+        </a>
     </form>
     <div class="view-box">
     <hr>
@@ -92,7 +95,7 @@
                         <label for="calories" class="control-label col-xs-3"><spring:message code="meals.calories"/></label>
 
                         <div class="col-xs-9">
-                            <input type="number" class="form-control" id="calories" name="calories" placeholder="<spring:message code="meals.dateTime"/>">
+                            <input type="number" class="form-control" id="calories" name="calories" placeholder="<spring:message code="meals.calories"/>">
                         </div>
                     </div>
 
