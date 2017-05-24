@@ -584,7 +584,7 @@
                 </con:request>
             </con:method>
         </con:resource>
-        <con:resource name="filter" path="/topjava/rest/profile/meals/filter" id="bdd36cb7-be1e-4806-b110-1a3001b46823">
+        <con:resource name="filter" path="/topjava/ajax/meals/filter" id="bdd36cb7-be1e-4806-b110-1a3001b46823">
             <con:settings/>
             <con:parameters>
                 <con:parameter>
@@ -604,7 +604,7 @@
                     <con:params/>
                     <con:element>Response</con:element>
                 </con:representation>
-                <con:request name="MealFilter" id="0ee8475d-06f1-41a8-8a3e-d4c7631558b9" mediaType="application/json">
+                <con:representation type="FAULT"><con:mediaType>text/html;charset=utf-8</con:mediaType><con:status>401</con:status><con:params/><con:element>html</con:element></con:representation><con:request name="MealFilter" id="0ee8475d-06f1-41a8-8a3e-d4c7631558b9" mediaType="application/json">
                     <con:settings>
                         <con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting>
                     </con:settings>

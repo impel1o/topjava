@@ -12,3 +12,8 @@ patches/
 /patches/hw2_patch/2_5_dependency_injection.patch
 /patches/hw2_patch/2_2_HW1_optional.patch
 /patches/hw2_patch/2_3_app_layers.patch
+src/main/java/ru/javawebinar/topjava/repository/mock/
+src/main/resources/db/test.sql
+src/main/resources/messages/
+src/main/webapp/css/
+src/main/webapp/fragments/
