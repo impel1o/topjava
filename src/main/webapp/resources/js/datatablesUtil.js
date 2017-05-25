@@ -29,6 +29,22 @@ function deleteRow(id) {
     });
 }
 
+
+// function updateTableByData(data) {
+//     datatableApi.clear().rows.add(data).draw();
+// }
+//
+//
+// function updateTable1() {
+//     $.ajax({
+//         type: "POST",
+//         url: ajaxUrl + "filter",
+//         data: $("#filter").serialize(),
+//         success: updateTableByData
+//     });
+// }
+
+
 function filter() {
     var form = $('#filterForm');
     $.ajax({
