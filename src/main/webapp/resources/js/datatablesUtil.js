@@ -30,18 +30,20 @@ function deleteRow(id) {
 }
 
 function filter() {
+    var form = $('#filterForm');
     $.ajax({
-        url: ajaxUrl + 'filter',
-        type: 'GET',
+        url: ajaxUrl+'filter/',
+        type: 'POST',
+        data: form.serialize(),
         success: function () {
             updateTable();
-            successNoty('Filtered');
+            successNoty('Filter applied')
         }
     });
 }
 
 function updateTable() {
-    $.get({url:ajaxUrl,cache:false},
+    $.get({url:ajaxUrl},
         function (data) {
         datatableApi.clear();
         $.each(data, function (key, item) {

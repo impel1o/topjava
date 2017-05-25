@@ -11,7 +11,31 @@
 <section>
     <h3><spring:message code="meals.title"/></h3>
 
-    <form method="get" action="meals/filter">
+    <%--<form method="POST" action="meals/filter">--%>
+        <%--<form method="POST" action="filterForm" id="filterForm">--%>
+        <%--<dl>--%>
+            <%--<dt><spring:message code="meals.startDate"/>:</dt>--%>
+            <%--<dd><input type="date" name="startDate" value="${param.startDate}"></dd>--%>
+        <%--</dl>--%>
+        <%--<dl>--%>
+            <%--<dt><spring:message code="meals.endDate"/>:</dt>--%>
+            <%--<dd><input type="date" name="endDate" id="endDate" value="${param.endDate}"></dd>--%>
+        <%--</dl>--%>
+        <%--<dl>--%>
+            <%--<dt><spring:message code="meals.startTime"/>:</dt>--%>
+            <%--<dd><input type="time" name="startTime" value="${param.startTime}"></dd>--%>
+        <%--</dl>--%>
+        <%--<dl>--%>
+            <%--<dt><spring:message code="meals.endTime"/>:</dt>--%>
+            <%--<dd><input type="time" name="endTime" value="${param.endTime}"></dd>--%>
+        <%--</dl>--%>
+        <%--<button type="submit"><spring:message code="meals.filter"/></button>--%>
+        <%--<a class="btn btn-info" onclick="filter()">--%>
+            <%--<span class="glyphicon glyphicon-filter" aria-hidden="true"></span>--%>
+        <%--</a>--%>
+    <%--</form>--%>
+
+    <form id="filterForm" onsubmit="filter(); return false;">
         <dl>
             <dt><spring:message code="meals.startDate"/>:</dt>
             <dd><input type="date" name="startDate" value="${param.startDate}"></dd>
@@ -29,10 +53,9 @@
             <dd><input type="time" name="endTime" value="${param.endTime}"></dd>
         </dl>
         <button type="submit"><spring:message code="meals.filter"/></button>
-        <a class="btn btn-info" onclick="filter()">
-            <span class="glyphicon glyphicon-filter" aria-hidden="true"></span>
-        </a>
+        <button type="reset" onclick="clearFilter()">Clear Filter</button>
     </form>
+
     <div class="view-box">
     <hr>
     <%--<a href="meals/create"><spring:message code="meals.add"/></a>--%>
